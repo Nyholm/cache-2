@@ -61,7 +61,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
                 return $value;
             }
         } catch (\Exception $e) {
-            CacheItem::log($this->logger, 'Failed to fetch key "{key}": '.$e->getMessage(), ['key' => $key, 'exception' => $e]);
+            CacheItem::log($this->logger, 'Failed to fetch key "{key}": '.$e->getMessage(), ['key' => $key, 'exception' => $e, 'cache-adapter' => get_debug_type($this)]);
         }
 
         return $default;
@@ -99,7 +99,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
         try {
             $values = $this->doFetch($ids);
         } catch (\Exception $e) {
-            CacheItem::log($this->logger, 'Failed to fetch values: '.$e->getMessage(), ['keys' => $keys, 'exception' => $e]);
+            CacheItem::log($this->logger, 'Failed to fetch values: '.$e->getMessage(), ['keys' => $keys, 'exception' => $e, 'cache-adapter' => get_debug_type($this)]);
             $values = [];
         }
         $ids = array_combine($ids, $keys);
@@ -141,7 +141,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
             $keys[] = substr($id, \strlen($this->namespace));
         }
         $message = 'Failed to save values'.($e instanceof \Exception ? ': '.$e->getMessage() : '.');
-        CacheItem::log($this->logger, $message, ['keys' => $keys, 'exception' => $e instanceof \Exception ? $e : null]);
+        CacheItem::log($this->logger, $message, ['keys' => $keys, 'exception' => $e instanceof \Exception ? $e : null, 'cache-adapter' => get_debug_type($this)]);
 
         return false;
     }
@@ -189,7 +189,7 @@ abstract class AbstractCache implements Psr16CacheInterface, LoggerAwareInterfac
                 yield $key => $value;
             }
         } catch (\Exception $e) {
-            CacheItem::log($this->logger, 'Failed to fetch values: '.$e->getMessage(), ['keys' => array_values($keys), 'exception' => $e]);
+            CacheItem::log($this->logger, 'Failed to fetch values: '.$e->getMessage(), ['keys' => array_values($keys), 'exception' => $e, 'cache-adapter' => get_debug_type($this)]);
         }
 
         foreach ($keys as $key) {
