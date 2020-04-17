@@ -27,7 +27,7 @@
         "symfony/cache-contracts": "^1.1.7|^2",
         "symfony/service-contracts": "^1.1|^2",
         "symfony/var-exporter": "^4.2|^5.0",
-        "symfony/polyfill-php80": "^1.15@dev"
+        "symfony/polyfill-php80": "^1.15"
     },
     "require-dev": {
         "cache/integration-tests": "dev-master",
