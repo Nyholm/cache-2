@@ -175,6 +175,7 @@ abstract class AbstractAdapter implements AdapterInterface, CacheInterface, Logg
                         'key' => substr($id, \strlen($this->namespace)),
                         'exception' => $e instanceof \Exception ? $e : null,
                         'exception-type' => get_debug_type($e),
+                        'debug-message' => $v,
                         'cache-adapter' => get_debug_type($this)
                     ]);
                 }
