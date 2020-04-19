@@ -170,8 +170,13 @@ abstract class AbstractAdapter implements AdapterInterface, CacheInterface, Logg
                     $ok = false;
                     $v = $values[$id];
                     $type = \is_object($v) ? \get_class($v) : \gettype($v);
-                    $message = sprintf('Failed to save key "{key}" of type %s%s', $type, $e instanceof \Exception ? ': '.$e->getMessage() : '.');
-                    CacheItem::log($this->logger, $message, ['key' => substr($id, \strlen($this->namespace)), 'exception' => $e instanceof \Exception ? $e : null, 'cache-adapter' => get_debug_type($this)]);
+                    $message = sprintf('[1]: Failed to save key "{key}" of type %s%s', $type, $e instanceof \Exception ? ': '.$e->getMessage() : '.');
+                    CacheItem::log($this->logger, $message, [
+                        'key' => substr($id, \strlen($this->namespace)),
+                        'exception' => $e instanceof \Exception ? $e : null,
+                        'exception-type' => get_debug_type($e),
+                        'cache-adapter' => get_debug_type($this)
+                    ]);
                 }
             } else {
                 foreach ($values as $id => $v) {
@@ -193,8 +198,12 @@ abstract class AbstractAdapter implements AdapterInterface, CacheInterface, Logg
                 }
                 $ok = false;
                 $type = \is_object($v) ? \get_class($v) : \gettype($v);
-                $message = sprintf('Failed to save key "{key}" of type %s%s', $type, $e instanceof \Exception ? ': '.$e->getMessage() : '.');
-                CacheItem::log($this->logger, $message, ['key' => substr($id, \strlen($this->namespace)), 'exception' => $e instanceof \Exception ? $e : null, 'cache-adapter' => get_debug_type($this)]);
+                $message = sprintf('[2]: Failed to save key "{key}" of type %s%s', $type, $e instanceof \Exception ? ': '.$e->getMessage() : '.');
+                CacheItem::log($this->logger, $message, [
+                    'key' => substr($id, \strlen($this->namespace)),
+                    'exception' => $e instanceof \Exception ? $e : null,
+                    'exception-type' => get_debug_type($e),
+                    'cache-adapter' => get_debug_type($this)]);
             }
         }
 
